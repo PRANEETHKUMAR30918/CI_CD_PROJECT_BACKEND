@@ -1,24 +1,16 @@
-package com.example.medicalappointmentsystem.controller;
+package com.example.medicalappointmentsystem.repository;
 
 import com.example.medicalappointmentsystem.model.User;
-import com.example.medicalappointmentsystem.model.User.Role;
-import com.example.medicalappointmentsystem.repository.UserRepository;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/doctors")
-public class DoctorController {
+@Repository  // 👈 this is important
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmail(String email);
+    Optional<User> findByUsername(String username);
+    List<User> findByRole(User.Role role);   // takes Enum
 
-    private final UserRepository userRepository;
-
-    public DoctorController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    @GetMapping
-    public List<User> getAllDoctors() {
-        return userRepository.findByRole(Role.DOCTOR); // ✅ Using enum
-    }
 }
