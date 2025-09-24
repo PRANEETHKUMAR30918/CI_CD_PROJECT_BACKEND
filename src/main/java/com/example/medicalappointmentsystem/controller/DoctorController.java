@@ -10,15 +10,15 @@ import java.util.List;
 @RequestMapping("/api/doctors")
 public class DoctorController {
 
-   private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-   public DoctorController(UserRepository userRepository) {
-       this.userRepository = userRepository;
-   }
+    public DoctorController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-   // GET /api/doctors → returns list of doctors
-   @GetMapping
-   public List<User> getAllDoctors() {
-       return userRepository.findByRole("DOCTOR");
-   }
+    // GET /api/doctors → returns list of doctors
+    @GetMapping
+    public List<User> getAllDoctors() {
+        return userRepository.findByRole(User.Role.DOCTOR);  // ✅ Use enum, not string
+    }
 }
